@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Add Rows To HTML Table From Array </title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+                th, td, p, input {
+                    font:14px Verdana;
+                }
+                table, th, td 
+                {
+                    border: solid 1px #DDD;
+                    border-collapse: collapse;
+                    padding: 2px 3px;
+                    text-align: center;
+                }
+                th {
+                    font-weight:bold;
+                }
+            </style>
+    </head>
+    <body>
+        <form style="width:700px; margin-left: 300px    ;">
+            <h4>Search by id product</h4>
+            <label for="exampleInputEmail1">Id Product</label>
+            <input type="text" style="margin-top: 10px;" class="form-control" id="id_product" aria-describedby="emailHelp" placeholder="Enter id">
+            <input class="btn btn-primary" style="margin-top: 10px;" type="button" name="search" id="search" value="search" onclick="searchID()">
+
+            <!-- <input style="margin-top: 10px;" type="text" class="form-control" name="id_product" id="id_product" placeholder="ID Product">
+            <input style="margin-top: 10px;" type="button" name="search" id="search" value="search" onclick="searchID()"> -->
+            
+            <h4>Search by type product</h4>
+            <input style="margin-top: 10px;" type="text" class="form-control" name="type" id="type"  placeholder="Type Product">
+            <input class="btn btn-primary" style="margin-top: 10px;" type="button" name="search" id="search" value="search" onclick="searchType()">
+            <h4>Search by <i class="fas fa-prescription-bottle    "></i> product</h4>
+            <input style="margin-top: 10px;" type="text" class="form-control" name="price" id="price"  placeholder="Type Product">
+            <input class="btn btn-primary" style="margin-top: 10px;" type="button" name="search" id="search" value="search" onclick="searchPrice()">
+        </form>
+<div class="row" style="margin-top: 20px;">
+    <div class="col-md-6">
+            <table class="table" style="width:350px; margin-left: 300px;" id="table" border="1">
+                    <tr>
+                        <th scope="col">ID Product</th>
+                        <th scope="col">Type Product</th>
+                        <th scope="col">Price Product</th>
+                        <th scope="col">Action</th>
+        
+                    </tr>
+                </table>
+    </div>
+    <div class="col-md-6">
+            <h4>Examined product</h4>
+            <p>Id Product: <span id="id_detail"></span></p>
+            <p>Type Product: <span id="type_detail"></span></p>
+            <p>Price Product: <span id="price_detail"></span></p>
+    </div>
+</div>
+        
+        <table class="table" style="width:350px; margin-left: 300px;" id="tableResult" border="1">
+                <tr>
+                    <th>ID Product</th>
+                    <th>Type Product</th>
+                    <th>Price Product</th>
+    
+                </tr>
+            </table>
+            
+            
+        
+<script>
+    
+      
+            const myBooks = [
+                {
+                    "product_id": "1",
+                    "category": "Ta",
+                    "price": "125.60"
+                    
+                },
+                {
+                    "product_id": "2",
+                    "category": "Ti",
+                    "price": "56.00"
+                },
+                {
+                    "product_id": "3",
+                    "category": "Na",
+                    "price": "210.40"
+                }
+            ]
+            var col = [];
+            for (var i = 0; i < myBooks.length; i++) {
+                for (var key in myBooks[i]) {
+                    if (col.indexOf(key) === -1) {
+                        col.push(key);
+                    }
+                }
+            }
+            var table = document.createElement("table");
+            var tr = table.insertRow(-1);
+    
+            for (var i = 0; i < col.length; i++) {
+                var th = document.createElement("th");
+                th.innerHTML = col[i];
+                tr.appendChild(th);
+            }
+            var th = document.createElement("th");
+                th.innerHTML = "examine";
+                tr.appendChild(th);
+
+                for (let i = 0; i < myBooks.length; i++) {
+                    tr = table.insertRow(-1);
+                    for (let j = 0; j < col.length; j++) {
+                    var tabCell = tr.insertCell(-1);
+                    tabCell.innerHTML = myBooks[i][col[j]];
+                    }
+                    var td = document.createElement("td");
+                    let button = document.createElement('button');
+                    button.innerHTML = "chitiet";
+                    button.addEventListener("click", () => {
+                    document.getElementById("id_detail").innerHTML = myBooks[i].product_id;
+                    document.getElementById("type_detail").innerHTML = myBooks[i].category;
+                    document.getElementById("price_detail").innerHTML = myBooks[i].price;
+
+                    });
+                    tr.appendChild(button);
+                    button.className="btn btn-primary";
+                    }
+
+            var divContainer = document.getElementById("table");
+            divContainer.innerHTML = "";
+            divContainer.appendChild(table);
+
+            
+
+
+                function searchID(){
+                    let inputId= document.getElementById("id_product").value;
+                    for(var i=0; i<myBooks.length; i++){
+                        if(myBooks[i].product_id==inputId){
+                            var col = [];
+                            for (var i = 0; i < myBooks.length; i++) {
+                                for (var key in myBooks[i]) {
+                                    if (col.indexOf(key) === -1) {
+                                        col.push(key);
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                        var table = document.createElement("table");
+
+                            var tr = table.insertRow(-1); 
+
+                            for (var i = 0; i < col.length; i++) {
+                                var th = document.createElement("th");
+                                th.innerHTML = col[i];
+                                tr.appendChild(th);
+                            }
+                            for (var i = 0; i < myBooks.length; i++) {
+                                if(myBooks[i].product_id==inputId){
+                                tr = table.insertRow(-1);
+
+                                for (var j = 0; j < col.length; j++) {
+                                    var tabCell = tr.insertCell(-1);
+                                    tabCell.innerHTML = myBooks[i][col[j]];
+                                }}
+                            }
+                            var divContainer = document.getElementById("tableResult");
+                            divContainer.innerHTML = "";
+                            divContainer.appendChild(table);
+                       
+                    
+                    
+                    
+                }
+
+
+                function searchType(){
+                    let inputType= document.getElementById("type").value;
+                    for(var i=0; i<myBooks.length; i++){
+                        if(myBooks[i].category==inputType){
+                            var col = [];
+                            for (var i = 0; i < myBooks.length; i++) {
+                                for (var key in myBooks[i]) {
+                                    if (col.indexOf(key) === -1) {
+                                        col.push(key);
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                        var table = document.createElement("table");
+
+                            var tr = table.insertRow(-1); 
+
+                            for (var i = 0; i < myBooks.length; i++) {
+                                var th = document.createElement("th");
+                                th.innerHTML = col[i];
+                                tr.appendChild(th);
+                            }
+                            for (var i = 0; i < myBooks.length; i++) {
+                                if(myBooks[i].category==inputType){
+                                tr = table.insertRow(-1);
+
+                                for (var j = 0; j < myBooks.length; j++) {
+                                    var tabCell = tr.insertCell(-1);
+                                    tabCell.innerHTML = myBooks[i][col[j]];
+                                }}
+                            }
+                            var divContainer = document.getElementById("tableResult");
+                            divContainer.innerHTML = "";
+                            divContainer.appendChild(table);
+                }
+
+                function searchPrice(){
+                    let inputPrice= document.getElementById("price").value;
+                    for(var i=0; i<myBooks.length; i++){
+                        if(myBooks[i].price>=parseInt(inputPrice)-50 && myBooks[i].price<=parseInt(inputPrice)+50){
+                            var col = [];
+                            for (var i = 0; i < myBooks.length; i++) {
+                                for (var key in myBooks[i]) {
+                                    if (col.indexOf(key) === -1) {
+                                        col.push(key);
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                        var table = document.createElement("table");
+
+                            var tr = table.insertRow(-1); 
+
+                            for (var i = 0; i < myBooks.length; i++) {
+                                var th = document.createElement("th");
+                                th.innerHTML = col[i];
+                                tr.appendChild(th);
+                            }
+                            for (var i = 0; i < myBooks.length; i++) {
+                                if(myBooks[i].price>=parseInt(inputPrice)-50 && myBooks[i].price<=parseInt(inputPrice)+50){
+                                tr = table.insertRow(-1);
+
+                                for (var j = 0; j < myBooks.length; j++) {
+                                    var tabCell = tr.insertCell(-1);
+                                    tabCell.innerHTML = myBooks[i][col[j]];
+                                }}
+                            }
+                            var divContainer = document.getElementById("tableResult");
+                            divContainer.innerHTML = "";
+                            divContainer.appendChild(table);
+                }
+    
+    
+    
+    </script>
+        </body>
+        </html>
